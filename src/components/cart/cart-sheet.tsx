@@ -1,6 +1,6 @@
 "use client"
 
-import { FileText, Plus, Minus, Package, Droplets, Leaf, Factory, LucideIcon } from "lucide-react"
+import { FileText, Plus, Minus, Package, Droplets, Leaf, Factory, LucideIcon, ClipboardList, Trash2 } from "lucide-react"
 import { useCart } from "@/store/use-cart"
 import { Button } from "@/components/ui/button"
 import {
@@ -44,18 +44,27 @@ export function CartSheet() {
   if (!isMounted) return null
 
   const totalItems = cart.getTotalItems()
-  const subtotal = cart.getTotalPrice()
-  const iva = subtotal * 0.19
-  const total = subtotal + iva
-
+  
+  // Como no mostramos precios, el total es solo referencial para lógica interna si fuera necesario
+  
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative hover:bg-slate-100 transition-colors">
-          <FileText className="h-5 w-5 text-slate-700" />
+        <Button 
+          variant="outline" 
+          className="relative group hover:border-emerald-500 hover:text-emerald-700 transition-all duration-300 gap-2 px-2.5 sm:px-4 h-9 sm:h-10 border-slate-200"
+        >
+          <ClipboardList className="h-4 w-4 text-slate-500 group-hover:text-emerald-600 transition-colors" />
+          
+          <span className="font-medium text-[11px] sm:text-sm text-slate-700 group-hover:text-emerald-800">
+            <span className="inline sm:hidden">Cotizar</span>
+            <span className="hidden sm:inline">Mi Cotización</span>
+          </span>
+
           {totalItems > 0 && (
-            <Badge
-              className="absolute -right-1 -top-1 h-5 w-5 justify-center rounded-full p-0 text-[10px] bg-emerald-600 hover:bg-emerald-700 border-2 border-white"
+            <Badge 
+              variant="secondary" 
+              className="ml-0.5 sm:ml-1 bg-emerald-600 text-white hover:bg-emerald-700 h-4.5 sm:h-5 px-1.5 min-w-[18px] sm:min-w-[20px] justify-center text-[9px] sm:text-[10px] font-bold shadow-sm"
             >
               {totalItems}
             </Badge>
@@ -65,7 +74,10 @@ export function CartSheet() {
       <SheetContent className="flex w-full flex-col sm:max-w-md bg-white p-0 gap-0 border-l shadow-2xl">
         {/* Header Minimalista */}
         <SheetHeader className="px-6 py-4 border-b border-slate-100 bg-slate-50/50">
-          <SheetTitle className="text-lg font-semibold text-slate-900">Solicitud de Cotización</SheetTitle>
+          <SheetTitle className="text-lg font-bold text-slate-900 flex items-center gap-2">
+            <FileText className="h-5 w-5 text-emerald-600" />
+            Resumen de Solicitud
+          </SheetTitle>
           <p className="text-xs text-slate-500 font-medium">
             ID de Sesión: #{sessionId}
           </p>
@@ -141,9 +153,11 @@ export function CartSheet() {
 
                         <button
                           onClick={() => cart.removeItem(item.variant.id)}
-                          className="text-xs text-slate-400 hover:text-red-600 underline decoration-dotted underline-offset-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="flex items-center gap-1.5 text-xs font-medium text-slate-500 hover:text-red-600 transition-colors p-1.5 -mr-1.5 rounded-md hover:bg-red-50"
+                          title="Eliminar producto"
                         >
-                          Eliminar
+                          <Trash2 className="h-3.5 w-3.5" />
+                          <span className="hidden sm:inline">Eliminar</span>
                         </button>
                       </div>
                     </div>

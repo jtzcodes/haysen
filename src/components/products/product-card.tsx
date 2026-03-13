@@ -131,57 +131,65 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
 
           {/* 4. Barra de Acción Compacta */}
-          <div className="flex items-center justify-between pt-4 border-t border-slate-100 gap-3">
-            {/* Texto Cotizar */}
-            <div className="flex flex-col">
-              <span className="text-sm font-bold text-slate-900 leading-none">
-                Cotizar
-              </span>
-              <span className="text-[10px] text-slate-400 font-medium">Producto</span>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {/* Selector Cantidad Mini */}
-              <div className="flex items-center bg-slate-50 rounded-lg border border-slate-200 h-9">
+          <div className="flex flex-col gap-3 pt-4 border-t border-slate-100">
+            {/* Fila: Selector Cantidad + Texto "Cotizar" */}
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col">
+                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Cantidad</span>
+                <span className="text-xs text-slate-500 font-medium">Unidades por pedido</span>
+              </div>
+              
+              <div className="flex items-center bg-white rounded-md border border-slate-200 h-10 shadow-sm w-32">
                 <button 
                   onClick={() => adjustQuantity(-1)}
-                  className="h-full px-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-100 rounded-l-lg transition-colors"
+                  className="h-full px-3 text-slate-400 hover:text-emerald-600 hover:bg-slate-50 rounded-l-md transition-colors border-r border-slate-100"
                   disabled={quantity <= 1 || !selectedVariant.stock}
                 >
                   <Minus className="h-3 w-3" />
                 </button>
-                <span className="w-6 text-center text-xs font-bold text-slate-700 select-none">
-                  {quantity}
-                </span>
+                <input
+                  type="number"
+                  min="1"
+                  value={quantity}
+                  onChange={(e) => {
+                    const val = parseInt(e.target.value)
+                    if (!isNaN(val) && val > 0) setQuantity(val)
+                  }}
+                  className="w-full text-center text-sm font-bold text-slate-900 border-none focus:ring-0 p-0 h-full"
+                />
                 <button 
                   onClick={() => adjustQuantity(1)}
-                  className="h-full px-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-100 rounded-r-lg transition-colors"
+                  className="h-full px-3 text-slate-400 hover:text-emerald-600 hover:bg-slate-50 rounded-r-md transition-colors border-l border-slate-100"
                   disabled={!selectedVariant.stock}
                 >
                   <Plus className="h-3 w-3" />
                 </button>
               </div>
-
-              {/* Botón Icono (Más compacto) */}
-              <Button 
-                size="icon"
-                className={cn(
-                  "h-9 w-9 shadow-sm transition-all duration-300",
-                  isAdded 
-                    ? "bg-emerald-600 hover:bg-emerald-700" 
-                    : "bg-slate-900 hover:bg-emerald-600"
-                )}
-                onClick={handleAddToCart}
-                disabled={!selectedVariant.stock}
-                title="Agregar a Cotización"
-              >
-                {isAdded ? (
-                  <Check className="h-4 w-4" />
-                ) : (
-                  <FileText className="h-4 w-4" />
-                )}
-              </Button>
             </div>
+
+            {/* Botón de Acción Principal (Ancho Completo) */}
+            <Button 
+              className={cn(
+                "w-full h-11 text-sm font-bold tracking-wide shadow-md transition-all duration-300",
+                isAdded 
+                  ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-200" 
+                  : "bg-slate-900 hover:bg-emerald-600 text-white hover:shadow-emerald-200"
+              )}
+              onClick={handleAddToCart}
+              disabled={!selectedVariant.stock}
+            >
+              {isAdded ? (
+                <span className="flex items-center gap-2">
+                  <Check className="h-4 w-4" />
+                  Agregado Correctamente
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <FileText className="h-4 w-4" />
+                  AGREGAR A COTIZACIÓN
+                </span>
+              )}
+            </Button>
           </div>
         </div>
       </div>
