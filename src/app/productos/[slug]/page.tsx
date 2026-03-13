@@ -4,7 +4,7 @@ import { useParams, notFound } from "next/navigation"
 import { products, Product } from "@/config/products"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { ArrowRight, CheckCircle2, Download, FileText, Share2, ShieldCheck, Droplets, Leaf, Factory, Package, LucideIcon } from "lucide-react"
+import { ArrowRight, CheckCircle2, Download, FileText, Share2, ShieldCheck, Droplets, Leaf, Factory, Package, LucideIcon, Minus, Plus } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { useCart } from "@/store/use-cart"
 import { useState } from "react"
@@ -59,8 +59,19 @@ export default function ProductDetailPage() {
             
             {/* Columna Izquierda: Visualización Técnica */}
             <div className="lg:col-span-5 relative">
-              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2", colorClasses)}>
-                <Icon className="w-48 h-48 lg:w-64 lg:h-64 opacity-90" />
+              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white", colorClasses)}>
+                {product.image ? (
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="flex flex-col items-center justify-center opacity-90">
+                    <Icon className="w-48 h-48 lg:w-64 lg:h-64" />
+                  </div>
+                )}
+                
                 <div className="absolute top-6 left-6">
                   <Badge variant="secondary" className="bg-white/90 backdrop-blur text-slate-700 shadow-sm border border-slate-100 px-3 py-1">
                     {product.category}
@@ -117,9 +128,7 @@ export default function ProductDetailPage() {
                     >
                       <span className="text-sm font-bold text-slate-900">{variant.name}</span>
                       <span className="text-xs text-slate-500 mb-2">{variant.weight} {variant.unit}</span>
-                      <span className="mt-auto font-mono font-bold text-emerald-700">
-                        {formatPrice(variant.price)}
-                      </span>
+                      {/* Precio Oculto para Cotización */}
                       {selectedVariantId === variant.id && (
                         <div className="absolute top-3 right-3 text-emerald-600">
                           <CheckCircle2 className="w-5 h-5" />
@@ -132,17 +141,41 @@ export default function ProductDetailPage() {
 
               {/* Panel de Acción */}
               <div className="flex flex-col sm:flex-row gap-4 items-center bg-slate-900 text-white p-6 rounded-2xl shadow-xl shadow-slate-900/10 mt-auto">
-                <div className="flex-1">
-                  <p className="text-slate-400 text-xs uppercase tracking-wider mb-1">Precio Total Neto</p>
-                  <p className="text-3xl font-bold font-mono">{formatPrice(selectedVariant.price)}</p>
+                <div className="flex-1 w-full sm:w-auto">
+                  <p className="text-slate-400 text-xs uppercase tracking-wider mb-2 font-bold">Cantidad a Cotizar</p>
+                  <div className="flex items-center bg-slate-800 rounded-lg p-1 border border-slate-700 w-fit">
+                    <button 
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="p-3 hover:bg-slate-700 rounded-md transition-colors text-slate-300 hover:text-white"
+                      disabled={quantity <= 1}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </button>
+                    <input 
+                      type="number" 
+                      min="1"
+                      value={quantity}
+                      onChange={(e) => {
+                        const val = parseInt(e.target.value)
+                        if (!isNaN(val) && val > 0) setQuantity(val)
+                      }}
+                      className="bg-transparent text-center w-16 font-bold text-lg focus:outline-none text-white border-none p-0"
+                    />
+                    <button 
+                      onClick={() => setQuantity(quantity + 1)}
+                      className="p-3 hover:bg-slate-700 rounded-md transition-colors text-slate-300 hover:text-white"
+                    >
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
                 </div>
                 <div className="flex items-center gap-4 w-full sm:w-auto">
                   <Button 
                     size="lg" 
-                    className="flex-1 sm:flex-none bg-emerald-600 hover:bg-emerald-500 text-white font-bold h-12 px-8"
+                    className="w-full sm:w-auto flex-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold h-14 px-8 text-base shadow-lg shadow-emerald-900/20"
                     onClick={handleAddToCart}
                   >
-                    Agregar al Pedido
+                    Agregar a Cotización
                   </Button>
                 </div>
               </div>
@@ -201,6 +234,8 @@ export default function ProductDetailPage() {
 
           {/* Sidebar Derecha: Descargas y Ayuda */}
           <div className="space-y-6">
+            {/* Sección Documentación Oculta Temporalmente */}
+            {/* 
             <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
               <h4 className="font-bold text-slate-900 mb-4">Documentación</h4>
               <div className="space-y-3">
@@ -226,7 +261,10 @@ export default function ProductDetailPage() {
                 </Button>
               </div>
             </div>
+            */}
 
+            {/* Sección Grandes Volúmenes Oculta (Redundante) */}
+            {/*
             <div className="bg-emerald-50 p-6 rounded-2xl border border-emerald-100">
               <h4 className="font-bold text-emerald-900 mb-2">¿Necesita grandes volúmenes?</h4>
               <p className="text-sm text-emerald-700 mb-4">
@@ -236,6 +274,7 @@ export default function ProductDetailPage() {
                 Cotizar Mayorista
               </Button>
             </div>
+            */}
           </div>
 
         </div>

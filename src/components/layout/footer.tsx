@@ -59,22 +59,23 @@ export function Footer() {
               Líderes en importación y distribución de soluciones desecantes industriales en Chile. 
               Abastecemos a la minería, farmacéutica y agroindustria con productos certificados de alta pureza.
             </p>
+            {/* 
             <div className="flex gap-3">
               <SocialButton href={siteConfig.links.instagram} icon={Instagram} label="Instagram" />
               <SocialButton href={siteConfig.links.facebook} icon={Facebook} label="Facebook" />
               <SocialButton href="#" icon={Linkedin} label="LinkedIn" />
             </div>
+            */}
           </div>
 
           {/* Columna 2: Productos (2 cols) */}
           <div className="lg:col-span-2 space-y-6">
             <h4 className="text-base font-bold text-white tracking-wide">Productos</h4>
             <ul className="space-y-3 text-sm">
-              <FooterLink href="/productos/silica-gel-azul">Silica Gel Azul</FooterLink>
-              <FooterLink href="/productos/silica-gel-naranja">Silica Gel Naranja</FooterLink>
-              <FooterLink href="/productos/silica-gel-blanca">Silica Gel Blanca</FooterLink>
-              <FooterLink href="/productos">Alúmina Activada</FooterLink>
-              <FooterLink href="/productos">Tamiz Molecular</FooterLink>
+              <FooterLink href="/productos">Catálogo Completo</FooterLink>
+              <FooterLink href="/productos/silica-gel-granel">Silica Gel a Granel</FooterLink>
+              <FooterLink href="/productos/silica-gel-sachets">Silica Gel en Sachets</FooterLink>
+              <FooterLink href="/productos/alumina-activada">Alúmina Activada</FooterLink>
             </ul>
           </div>
 
@@ -92,6 +93,7 @@ export function Footer() {
 
           {/* Columna 4: Newsletter y Contacto (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
+            {/* 
             <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-800">
               <h4 className="text-base font-bold text-white mb-2">Suscríbete a novedades</h4>
               <p className="text-xs text-slate-400 mb-4">
@@ -107,6 +109,7 @@ export function Footer() {
                 </Button>
               </div>
             </div>
+            */}
 
             <div className="space-y-3 pt-2">
               <ContactItem icon={Phone} text={siteConfig.contact.phone} href={`tel:${siteConfig.contact.phone}`} />
