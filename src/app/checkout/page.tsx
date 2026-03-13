@@ -135,12 +135,11 @@ export default function CheckoutPage() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div className="space-y-2">
-                  <Label htmlFor="empresa">Empresa / Razón Social *</Label>
+                  <Label htmlFor="empresa">Empresa (Opcional)</Label>
                   <Input 
                     id="empresa" 
                     name="empresa" 
                     placeholder="Ej: Minera X SpA" 
-                    required
                     value={formData.empresa}
                     onChange={handleChange}
                     className="bg-slate-50/50"
@@ -161,7 +160,7 @@ export default function CheckoutPage() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">Correo Corporativo *</Label>
+                <Label htmlFor="email">Correo Electrónico *</Label>
                 <Input 
                   id="email" 
                   name="email" 
@@ -244,7 +243,7 @@ export default function CheckoutPage() {
                 <Button 
                   className="w-full bg-emerald-600 hover:bg-emerald-700 text-white h-12 text-base font-bold shadow-lg shadow-emerald-200 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={handleQuoteRequest}
-                  disabled={!formData.nombre || !formData.empresa || !formData.email || !formData.telefono || isLoading}
+                  disabled={!formData.nombre || !formData.email || !formData.telefono || isLoading}
                 >
                   <Send className="mr-2 h-4 w-4" />
                   {isLoading ? 'ENVIANDO...' : 'ENVIAR SOLICITUD'}

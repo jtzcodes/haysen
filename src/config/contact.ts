@@ -7,19 +7,19 @@
 export const contactConfig = {
   // Teléfono principal (Aparece en el encabezado y pie de página)
   phone: {
-    display: "+56 9 1234 5678", // Lo que ve el cliente
-    link: "56912345678",        // Número para llamar (sin espacios ni símbolos)
+    display: "+56987619809", // Lo que ve el cliente
+    link: "56987619809",        // Número para llamar (sin espacios ni símbolos)
   },
 
   // WhatsApp (Para el botón flotante y enlaces directos)
   whatsapp: {
-    display: "+56 9 1234 5678", // Lo que ve el cliente
-    number: "56912345678",      // Número real para el enlace de WhatsApp
+    display: "+56987619809", // Lo que ve el cliente
+    number: "56987619809",      // Número real para el enlace de WhatsApp
     message: "Hola, me gustaría cotizar silica gel.", // Mensaje predeterminado
   },
 
   // Correo Electrónico
-  email: "contactooo@haysengroup.cl",
+  email: "contacto@haysengroup.cl",
 
   // Dirección Física
   address: "Santiago, Chile",
