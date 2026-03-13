@@ -6,7 +6,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent } from "@/components/ui/card"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
-import { Mail, MapPin, Phone, Send, Clock, MessageSquare, Building2, Smartphone } from "lucide-react"
+import { Mail, MapPin, Phone, Send, Clock, MessageSquare, Building2, Smartphone, CheckCircle2, AlertCircle, Loader2 } from "lucide-react"
 import { siteConfig } from "@/config/site"
 import { useState } from "react"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
@@ -20,22 +20,42 @@ export function ContactView() {
     mensaje: ""
   })
 
-  const handleWhatsAppSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    const message = `
-*CONSULTA WEB - ${siteConfig.name}*
---------------------------------
-👤 *Nombre:* ${formData.nombre}
-🏢 *Empresa:* ${formData.empresa || "Particular"}
-📞 *Teléfono:* ${formData.telefono}
-📧 *Email:* ${formData.email}
---------------------------------
-📝 *Mensaje:* 
-${formData.mensaje}
-`.trim()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [errorMessage, setErrorMessage] = useState("")
 
-    const whatsappUrl = `https://wa.me/${siteConfig.contact.whatsapp}?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, "_blank")
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setErrorMessage("")
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error("Error al enviar el mensaje")
+      }
+
+      setIsSuccess(true)
+      setFormData({
+        nombre: "",
+        empresa: "",
+        telefono: "",
+        email: "",
+        mensaje: ""
+      })
+    } catch (error) {
+      console.error(error)
+      setErrorMessage("Hubo un problema al enviar su mensaje. Por favor intente nuevamente o contáctenos por WhatsApp.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const faqs = [
@@ -160,85 +180,128 @@ ${formData.mensaje}
                   </p>
                 </div>
 
-                <form onSubmit={handleWhatsAppSubmit} className="space-y-4">
-                  {/* Fila: Nombre y Empresa */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="nombre">Nombre</Label>
-                      <Input 
-                        id="nombre" 
-                        placeholder="Juan Pérez" 
-                        required 
-                        value={formData.nombre}
-                        onChange={(e) => setFormData({...formData, nombre: e.target.value})}
-                      />
+                {isSuccess ? (
+                  <div className="text-center py-12 space-y-4 animate-in fade-in zoom-in duration-500">
+                    <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center mx-auto text-emerald-600">
+                      <CheckCircle2 className="h-10 w-10" />
                     </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="empresa">Empresa <span className="text-slate-400 font-normal text-xs">(Opcional)</span></Label>
-                      <div className="relative">
-                        <Building2 className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
-                        <Input 
-                          id="empresa" 
-                          placeholder="Mi Empresa SpA" 
-                          className="pl-9"
-                          value={formData.empresa}
-                          onChange={(e) => setFormData({...formData, empresa: e.target.value})}
-                        />
-                      </div>
-                    </div>
+                    <h3 className="text-2xl font-bold text-slate-900">¡Mensaje Recibido!</h3>
+                    <p className="text-slate-600">
+                      Hemos recibido su consulta correctamente. Nuestro equipo comercial le responderá a la brevedad posible.
+                    </p>
+                    <Button 
+                      className="mt-4 bg-slate-900 text-white"
+                      onClick={() => setIsSuccess(false)}
+                    >
+                      Enviar otro mensaje
+                    </Button>
                   </div>
-
-                  {/* Fila: Email y Teléfono */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="email">Email Corporativo</Label>
-                      <Input 
-                        id="email" 
-                        type="email" 
-                        placeholder="contacto@empresa.com" 
-                        required 
-                        value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="telefono">Teléfono / WhatsApp</Label>
-                      <div className="relative">
-                        <Smartphone className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    {errorMessage && (
+                      <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4" />
+                        {errorMessage}
+                      </div>
+                    )}
+                    
+                    {/* Fila: Nombre y Empresa */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="nombre">Nombre</Label>
                         <Input 
-                          id="telefono" 
-                          type="tel" 
-                          placeholder="+56 9..." 
-                          className="pl-9"
+                          id="nombre" 
+                          placeholder="Juan Pérez" 
                           required 
-                          value={formData.telefono}
-                          onChange={(e) => setFormData({...formData, telefono: e.target.value})}
+                          value={formData.nombre}
+                          onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                          disabled={isSubmitting}
                         />
                       </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="empresa">Empresa <span className="text-slate-400 font-normal text-xs">(Opcional)</span></Label>
+                        <div className="relative">
+                          <Building2 className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                          <Input 
+                            id="empresa" 
+                            placeholder="Mi Empresa SpA" 
+                            className="pl-9"
+                            value={formData.empresa}
+                            onChange={(e) => setFormData({...formData, empresa: e.target.value})}
+                            disabled={isSubmitting}
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="space-y-2">
-                    <Label htmlFor="mensaje">Detalle su requerimiento</Label>
-                    <Textarea 
-                      id="mensaje" 
-                      placeholder="Hola, necesito cotizar 50 kilos de Silica Gel Naranja para entrega en Antofagasta..." 
-                      className="min-h-[120px] resize-none"
-                      required 
-                      value={formData.mensaje}
-                      onChange={(e) => setFormData({...formData, mensaje: e.target.value})}
-                    />
-                  </div>
+                    {/* Fila: Email y Teléfono */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email Corporativo</Label>
+                        <Input 
+                          id="email" 
+                          type="email" 
+                          placeholder="contacto@empresa.com" 
+                          required 
+                          value={formData.email}
+                          onChange={(e) => setFormData({...formData, email: e.target.value})}
+                          disabled={isSubmitting}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="telefono">Teléfono / WhatsApp</Label>
+                        <div className="relative">
+                          <Smartphone className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                          <Input 
+                            id="telefono" 
+                            type="tel" 
+                            placeholder="+56 9..." 
+                            className="pl-9"
+                            required 
+                            value={formData.telefono}
+                            onChange={(e) => setFormData({...formData, telefono: e.target.value})}
+                            disabled={isSubmitting}
+                          />
+                        </div>
+                      </div>
+                    </div>
 
-                  <Button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 h-12 text-lg shadow-emerald-200 shadow-lg transition-all hover:scale-[1.01]">
-                    <MessageSquare className="mr-2 h-5 w-5" />
-                    Enviar Solicitud
-                  </Button>
+                    <div className="space-y-2">
+                      <Label htmlFor="mensaje">Detalle su requerimiento</Label>
+                      <Textarea 
+                        id="mensaje" 
+                        placeholder="Hola, necesito cotizar 50 kilos de Silica Gel Naranja para entrega en Antofagasta..." 
+                        className="min-h-[120px] resize-none"
+                        required 
+                        value={formData.mensaje}
+                        onChange={(e) => setFormData({...formData, mensaje: e.target.value})}
+                        disabled={isSubmitting}
+                      />
+                    </div>
 
-                  <p className="text-xs text-center text-slate-400 mt-4">
-                    Sus datos están seguros. Responderemos en menos de 2 horas hábiles.
-                  </p>
-                </form>
+                    <Button 
+                      type="submit" 
+                      className="w-full bg-emerald-600 hover:bg-emerald-700 h-12 text-lg shadow-emerald-200 shadow-lg transition-all hover:scale-[1.01]"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                          Enviando...
+                        </>
+                      ) : (
+                        <>
+                          <Send className="mr-2 h-5 w-5" />
+                          Enviar Mensaje
+                        </>
+                      )}
+                    </Button>
+
+                    <p className="text-xs text-center text-slate-400 mt-4">
+                      Sus datos están seguros. Responderemos en menos de 2 horas hábiles.
+                    </p>
+                  </form>
+                )}
               </CardContent>
             </Card>
           </div>
