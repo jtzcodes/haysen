@@ -10,6 +10,7 @@ import { useState } from "react"
 import { Check, FileText, Package, Droplets, Leaf, Factory, LucideIcon, Minus, Plus, ImageIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import Link from "next/link"
+import Image from "next/image"
 
 interface ProductCardProps {
   product: Product
@@ -58,10 +59,12 @@ export function ProductCard({ product }: ProductCardProps) {
       {/* 1. Imagen / Header Visual (Más compacto: h-48) */}
       <Link href={`/productos/${product.slug}`} className="block w-full h-48 bg-slate-50 relative overflow-hidden shrink-0 cursor-pointer group-image">
         {product.image ? (
-          <img 
+          <Image 
             src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            alt={`Imagen de ${product.name}`}
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300">
