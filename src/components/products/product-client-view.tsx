@@ -3,7 +3,7 @@
 import { Product } from "@/config/products"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { CheckCircle2, FileText, Factory, Package, Droplets, Leaf, LucideIcon, Minus, Plus } from "lucide-react"
+import { CheckCircle2, FileText, Factory, Package, Droplets, Leaf, LucideIcon, Minus, Plus, ShieldCheck } from "lucide-react"
 import { useCart } from "@/store/use-cart"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
