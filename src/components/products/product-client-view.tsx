@@ -24,19 +24,23 @@ interface ProductClientViewProps {
 }
 
 export function ProductClientView({ product }: ProductClientViewProps) {
-  const { Icon, color } = getProductIcon(product.name, product.category)
+  // Estado para variantes
+  const [selectedVariantId, setSelectedVariantId] = useState(product.variants[0].id)
+  const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
+  const cart = useCart()
+  const [quantity, setQuantity] = useState(1)
+
+  // Calcular icono y color basados en el nombre de la VARIANTE seleccionada (para que reaccione al clic)
+  // Si la variante no dice "blanca", "naranja", etc., usamos el nombre del producto como respaldo.
+  const nameForColor = `${product.name} ${selectedVariant.name}`
+  const { Icon, color } = getProductIcon(nameForColor, product.category)
+  
   const colorClasses = {
     emerald: "text-emerald-600 bg-emerald-50 border-emerald-100",
     blue: "text-blue-600 bg-blue-50 border-blue-100",
     amber: "text-amber-600 bg-amber-50 border-amber-100",
     slate: "text-slate-600 bg-slate-50 border-slate-100",
   }[color]
-
-  // Estado para variantes
-  const [selectedVariantId, setSelectedVariantId] = useState(product.variants[0].id)
-  const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
-  const cart = useCart()
-  const [quantity, setQuantity] = useState(1)
 
   const handleAddToCart = () => {
     cart.addItem(product, selectedVariant, quantity)
@@ -55,15 +59,16 @@ export function ProductClientView({ product }: ProductClientViewProps) {
             
             {/* Columna Izquierda: Visualización Técnica */}
             <div className="lg:col-span-5 relative">
-              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white", colorClasses)}>
+              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white transition-colors duration-500", colorClasses)}>
                 {displayImage ? (
                   <Image 
+                    key={displayImage} // Forzar re-render cuando cambia la imagen
                     src={displayImage} 
                     alt={`Imagen de ${product.name} - ${selectedVariant.name}`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     priority
-                    className="object-cover transition-opacity duration-300"
+                    className="object-cover animate-in fade-in zoom-in duration-500"
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center opacity-90">
