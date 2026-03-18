@@ -42,6 +42,9 @@ export function ProductClientView({ product }: ProductClientViewProps) {
     cart.addItem(product, selectedVariant, quantity)
   }
 
+  // Determinar qué imagen mostrar (prioriza la de la variante seleccionada, luego la del producto)
+  const displayImage = selectedVariant.image || product.image
+
   return (
     <div className="min-h-screen bg-slate-50">
       
@@ -53,14 +56,14 @@ export function ProductClientView({ product }: ProductClientViewProps) {
             {/* Columna Izquierda: Visualización Técnica */}
             <div className="lg:col-span-5 relative">
               <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white", colorClasses)}>
-                {product.image ? (
+                {displayImage ? (
                   <Image 
-                    src={product.image} 
-                    alt={`Imagen de ${product.name}`}
+                    src={displayImage} 
+                    alt={`Imagen de ${product.name} - ${selectedVariant.name}`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     priority
-                    className="object-cover"
+                    className="object-cover transition-opacity duration-300"
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center opacity-90">

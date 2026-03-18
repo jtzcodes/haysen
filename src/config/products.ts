@@ -5,6 +5,7 @@ export type ProductVariant = {
   stock: boolean
   unit: string // "kg", "pack", "saco"
   weight: number // en kg
+  image?: string // Imagen específica de la variante (opcional)
 }
 
 export type Product = {
@@ -42,8 +43,8 @@ export const products: Product[] = [
       "Almacenamiento industrial",
     ],
     variants: [
-      { id: "sg-blanca-25kg", name: "Blanca 3-5mm (Pack 25kg)", price: 0, stock: true, unit: "pack", weight: 25 },
-      { id: "sg-naranja-25kg", name: "Naranja 3-5mm (Pack 25kg)", price: 0, stock: true, unit: "pack", weight: 25 },
+      { id: "sg-blanca-25kg", name: "Blanca 3-5mm (Pack 25kg)", price: 0, stock: true, unit: "pack", weight: 25, image: "/productos/silica-gel-white-3-5mm-25kg.jpeg" },
+      { id: "sg-naranja-25kg", name: "Naranja 3-5mm (Pack 25kg)", price: 0, stock: true, unit: "pack", weight: 25, image: "/productos/silica-gel-orange-3-5mm-25kg.jpeg" },
     ],
   },
   {
