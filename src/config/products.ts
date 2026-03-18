@@ -80,7 +80,7 @@ export const products: Product[] = [
     slug: "silica-gel-sachet-micro",
     description: "Pequeños sachets de 1.5g de Silica Gel Blanca. Diseñados específicamente para espacios reducidos, frascos de medicamentos, pruebas de diagnóstico y joyería pequeña.",
     shortDescription: "Micro sachets de 1.5g para espacios reducidos.",
-    image: "/productos/silica-gel-blanca-35mm-1&5g-sachets-20kg.jpg", // Imagen real
+    image: "/productos/silica-gel-blanca-35mm-1-5g-sachets-20kg.jpg", // Imagen real
     category: "Sachets",
     features: [
       "Tamaño compacto (1.5g)",

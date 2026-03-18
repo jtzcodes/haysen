@@ -59,7 +59,7 @@ export function ProductClientView({ product }: ProductClientViewProps) {
             
             {/* Columna Izquierda: Visualización Técnica */}
             <div className="lg:col-span-5 relative">
-              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white transition-colors duration-500", colorClasses)}>
+              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white transition-colors duration-500 relative", colorClasses)}>
                 {displayImage ? (
                   <Image 
                     key={displayImage} // Forzar re-render cuando cambia la imagen

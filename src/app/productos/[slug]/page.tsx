@@ -30,5 +30,5 @@ export default function ProductDetailPage({ params }: { params: { slug: string }
     notFound()
   }
 
-  return <ProductClientView product={product} />
+  return <ProductClientView key={product.id} product={product} />
 }
