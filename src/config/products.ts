@@ -27,7 +27,7 @@ export const products: Product[] = [
     slug: "silica-gel-granel",
     description: "Silica Gel de alta pureza en formato a granel. Disponible en variedades Blanca (estándar) y Naranja (con indicador de saturación libre de cobalto). Ideal para grandes volúmenes y procesos industriales.",
     shortDescription: "Formatos industriales de 25kg en variedad Blanca y Naranja.",
-    image: "/productos/silica-gel-naranja-35mm-500g-sachets-20kg.jpg", // Imagen temporal (parche) hasta tener foto de saco
+    image: "/productos/silica-gel-orange-3-5mm-25kg.jpeg",
     category: "Industrial",
     features: [
       "Alta capacidad de absorción",
@@ -103,7 +103,7 @@ export const products: Product[] = [
     slug: "alumina-activada",
     description: "Desecante industrial de alta resistencia mecánica y térmica. Ideal para secado de gases, aire comprimido y filtrado de aceites. No se desintegra con el agua líquida.",
     shortDescription: "Desecante industrial para gases y aire comprimido.",
-    image: "/productos/silica-gel-blanca-35mm-1&5g-sachets-20kg.jpg", // Imagen temporal (parche) hasta tener foto de alúmina
+    image: "/productos/activated-alumina-3-5mm-25kg.jpeg",
     category: "Industrial",
     features: [
       "Alta resistencia al choque térmico",
