@@ -68,10 +68,10 @@ export const products: Product[] = [
       "Archivos y documentos",
     ],
     variants: [
-      { id: "sachet-10g", name: "Sachet 10g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20 },
-      { id: "sachet-100g", name: "Sachet 100g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20 },
-      { id: "sachet-250g", name: "Sachet 250g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20 },
-      { id: "sachet-500g", name: "Sachet 500g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20 },
+      { id: "sachet-10g", name: "Sachet 10g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20, image: "/productos/silica-gel-naranja-35mm-10g-sachets-20kg.jpg" },
+      { id: "sachet-100g", name: "Sachet 100g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20, image: "/productos/silica-gel-naranja-35mm-100g-sachets-20kg.jpg" },
+      { id: "sachet-250g", name: "Sachet 250g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20, image: "/productos/silica-gel-naranja-35mm-250g-sachets-20kg.jpg" },
+      { id: "sachet-500g", name: "Sachet 500g (Caja 20kg)", price: 0, stock: true, unit: "caja", weight: 20, image: "/productos/silica-gel-naranja-35mm-500g-sachets-20kg.jpg" },
     ],
   },
   {

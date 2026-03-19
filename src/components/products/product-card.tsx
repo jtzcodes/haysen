@@ -34,6 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const [isAdded, setIsAdded] = useState(false)
 
   const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
+  const displayImage = selectedVariant.image || product.image
   const { Icon, color } = getProductIcon(product.name, product.category)
 
   const colorClasses = {
@@ -58,9 +59,10 @@ export function ProductCard({ product }: ProductCardProps) {
     <Card className="flex flex-col overflow-hidden border-border/50 bg-white shadow-sm hover:shadow-md transition-all duration-300 h-full group">
       {/* 1. Imagen / Header Visual (Más compacto: h-48) */}
       <Link href={`/productos/${product.slug}`} className="block w-full h-48 bg-slate-50 relative overflow-hidden shrink-0 cursor-pointer group-image">
-        {product.image ? (
-          <Image 
-            src={product.image} 
+        {displayImage ? (
+          <Image
+            key={displayImage}
+            src={displayImage}
             alt={`Imagen de ${product.name}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

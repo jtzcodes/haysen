@@ -7,7 +7,7 @@ import { CheckCircle2, FileText, Factory, Package, Droplets, Leaf, LucideIcon, M
 import { useCart } from "@/store/use-cart"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
+
 
 // Helper para iconos (Reutilizado)
 const getProductIcon = (name: string, category: string): { Icon: LucideIcon, color: string } => {
@@ -24,17 +24,23 @@ interface ProductClientViewProps {
 }
 
 export function ProductClientView({ product }: ProductClientViewProps) {
-  // Estado para variantes
-  const [selectedVariantId, setSelectedVariantId] = useState(product.variants[0].id)
-  const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
+  const firstVariant = product.variants[0]
+  const [selectedVariantId, setSelectedVariantId] = useState(firstVariant.id)
+  const [displayImage, setDisplayImage] = useState(firstVariant.image || product.image)
+  const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || firstVariant
   const cart = useCart()
   const [quantity, setQuantity] = useState(1)
 
-  // Calcular icono y color basados en el nombre de la VARIANTE seleccionada (para que reaccione al clic)
-  // Si la variante no dice "blanca", "naranja", etc., usamos el nombre del producto como respaldo.
+  const handleVariantSelect = (variantId: string) => {
+    const variant = product.variants.find(v => v.id === variantId)
+    if (!variant) return
+    setSelectedVariantId(variantId)
+    setDisplayImage(variant.image || product.image)
+  }
+
   const nameForColor = `${product.name} ${selectedVariant.name}`
   const { Icon, color } = getProductIcon(nameForColor, product.category)
-  
+
   const colorClasses = {
     emerald: "text-emerald-600 bg-emerald-50 border-emerald-100",
     blue: "text-blue-600 bg-blue-50 border-blue-100",
@@ -46,9 +52,6 @@ export function ProductClientView({ product }: ProductClientViewProps) {
     cart.addItem(product, selectedVariant, quantity)
   }
 
-  // Determinar qué imagen mostrar (prioriza la de la variante seleccionada, luego la del producto)
-  const displayImage = selectedVariant.image || product.image
-
   return (
     <div className="min-h-screen bg-slate-50">
       
@@ -59,16 +62,14 @@ export function ProductClientView({ product }: ProductClientViewProps) {
             
             {/* Columna Izquierda: Visualización Técnica */}
             <div className="lg:col-span-5 relative">
-              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white transition-colors duration-500 relative", colorClasses)}>
+              <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white transition-all duration-500 relative", colorClasses)}>
                 {displayImage ? (
-                  <Image 
-                    key={displayImage} // Forzar re-render cuando cambia la imagen
-                    src={displayImage} 
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    key={displayImage}
+                    src={displayImage}
                     alt={`Imagen de ${product.name} - ${selectedVariant.name}`}
-                    fill
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    priority
-                    className="object-cover animate-in fade-in zoom-in duration-500"
+                    className="w-full h-full object-cover"
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center opacity-90">
@@ -122,7 +123,7 @@ export function ProductClientView({ product }: ProductClientViewProps) {
                   {product.variants.map((variant) => (
                     <button
                       key={variant.id}
-                      onClick={() => setSelectedVariantId(variant.id)}
+                      onClick={() => handleVariantSelect(variant.id)}
                       className={cn(
                         "relative flex flex-col p-4 rounded-xl border-2 text-left transition-all",
                         selectedVariantId === variant.id
