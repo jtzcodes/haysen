@@ -32,6 +32,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const [selectedVariantId, setSelectedVariantId] = useState(product.variants[0].id)
   const [quantity, setQuantity] = useState(1)
   const [isAdded, setIsAdded] = useState(false)
+  const [isImageLoading, setIsImageLoading] = useState(false)
 
   const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || product.variants[0]
   const displayImage = selectedVariant.image || product.image
@@ -61,12 +62,12 @@ export function ProductCard({ product }: ProductCardProps) {
       <Link href={`/productos/${product.slug}`} className="block w-full h-48 bg-slate-50 relative overflow-hidden shrink-0 cursor-pointer group-image">
         {displayImage ? (
           <Image
-            key={displayImage}
             src={displayImage}
             alt={`Imagen de ${product.name}`}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            className={cn("object-cover group-hover:scale-105 transition-[transform,opacity] duration-300", isImageLoading ? "opacity-0" : "opacity-100")}
+            onLoad={() => setIsImageLoading(false)}
           />
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-300">
@@ -121,6 +122,7 @@ export function ProductCard({ product }: ProductCardProps) {
                   onClick={() => {
                     setSelectedVariantId(variant.id)
                     setQuantity(1)
+                    setIsImageLoading(true)
                   }}
                   className={cn(
                     "text-xs font-medium px-3 py-1.5 rounded-full border transition-all",

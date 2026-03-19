@@ -7,6 +7,7 @@ import { CheckCircle2, FileText, Factory, Package, Droplets, Leaf, LucideIcon, M
 import { useCart } from "@/store/use-cart"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
+import Image from "next/image"
 
 
 // Helper para iconos (Reutilizado)
@@ -27,6 +28,7 @@ export function ProductClientView({ product }: ProductClientViewProps) {
   const firstVariant = product.variants[0]
   const [selectedVariantId, setSelectedVariantId] = useState(firstVariant.id)
   const [displayImage, setDisplayImage] = useState(firstVariant.image || product.image)
+  const [isImageLoading, setIsImageLoading] = useState(false)
   const selectedVariant = product.variants.find(v => v.id === selectedVariantId) || firstVariant
   const cart = useCart()
   const [quantity, setQuantity] = useState(1)
@@ -36,6 +38,7 @@ export function ProductClientView({ product }: ProductClientViewProps) {
     if (!variant) return
     setSelectedVariantId(variantId)
     setDisplayImage(variant.image || product.image)
+    setIsImageLoading(true)
   }
 
   const nameForColor = `${product.name} ${selectedVariant.name}`
@@ -64,12 +67,14 @@ export function ProductClientView({ product }: ProductClientViewProps) {
             <div className="lg:col-span-5 relative">
               <div className={cn("aspect-square rounded-3xl flex items-center justify-center border-2 overflow-hidden bg-white transition-all duration-500 relative", colorClasses)}>
                 {displayImage ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    key={displayImage}
+                  <Image
                     src={displayImage}
                     alt={`Imagen de ${product.name} - ${selectedVariant.name}`}
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    loading="eager"
+                    className={cn("object-cover transition-opacity duration-300", isImageLoading ? "opacity-0" : "opacity-100")}
+                    onLoad={() => setIsImageLoading(false)}
                   />
                 ) : (
                   <div className="flex flex-col items-center justify-center opacity-90">

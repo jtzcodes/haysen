@@ -13,6 +13,7 @@ export function Logo({ className, variant = "default" }: { className?: string, v
           src="/logo/logo-haysen.png" 
           alt="Haysen Group Chile Logo" 
           fill
+          sizes="(max-width: 640px) 128px, 160px"
           className="object-contain object-left"
           priority
         />
