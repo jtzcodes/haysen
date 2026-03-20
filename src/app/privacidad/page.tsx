@@ -32,7 +32,7 @@ export default function PrivacidadPage() {
 
             <h2>1. Responsable del Tratamiento</h2>
             <p>
-              <strong>Haysen Group Chile SpA</strong>, RUT: [RUT empresa], con domicilio en Santiago, Chile, es responsable del tratamiento de los datos personales recopilados a través del sitio web <strong>haysen.cl</strong>.
+              <strong>Haysen Group Chile SpA</strong>, con domicilio en Santiago, Chile, es responsable del tratamiento de los datos personales recopilados a través del sitio web <strong>haysen.cl</strong>.
             </p>
 
             <h2>2. Datos que Recopilamos</h2>

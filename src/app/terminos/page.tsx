@@ -37,7 +37,7 @@ export default function TerminosPage() {
 
             <h2>2. Identificación de la Empresa</h2>
             <p>
-              <strong>Haysen Group Chile SpA</strong>, RUT: [RUT empresa], es la empresa propietaria y responsable del sitio web haysen.cl, dedicada a la importación y distribución de desecantes industriales en Chile.
+              <strong>Haysen Group Chile SpA</strong> es la empresa propietaria y responsable del sitio web haysen.cl, dedicada a la importación y distribución de desecantes industriales en Chile.
             </p>
 
             <h2>3. Uso del Sitio Web</h2>
