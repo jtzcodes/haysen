@@ -1,7 +1,13 @@
+import type { Metadata } from "next"
 import { getSortedPostsData } from "@/lib/blog"
 import { BlogCard } from "@/components/blog/blog-card"
 import { Badge } from "@/components/ui/badge"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+
+export const metadata: Metadata = {
+  title: "Blog — Desecantes y Control de Humedad",
+  description: "Artículos técnicos sobre Silica Gel, Alúmina Activada y control de humedad para la industria chilena.",
+}
 
 export default function BlogPage() {
   const posts = getSortedPostsData()

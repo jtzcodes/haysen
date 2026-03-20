@@ -23,6 +23,7 @@ const barlow = Barlow({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://haysen.cl'),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,

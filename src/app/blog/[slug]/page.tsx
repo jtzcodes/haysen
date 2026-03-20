@@ -1,3 +1,4 @@
+import type { Metadata } from "next"
 import { getPostData, getSortedPostsData } from "@/lib/blog"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import Link from "next/link"
@@ -7,6 +8,22 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
 import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPostData(slug)
+  return {
+    title: post.title,
+    description: post.excerpt,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.date,
+      ...(post.image && { images: [post.image] }),
+    },
+  }
+}
 
 const icons: Record<string, LucideIcon> = {
   BookOpen,
