@@ -3,8 +3,8 @@ import { contactConfig } from "@/config/contact"
 export const siteConfig = {
   name: "Haysen Group Chile",
   description: "Líderes en Silica Gel, Alúmina Activada y Desecantes Industriales en Chile. Venta a granel y sachets para control de humedad en transporte e industria.",
-  url: "https://haysengroup.cl", // Placeholder
-  ogImage: "https://haysengroup.cl/og.jpg",
+  url: "https://haysen.cl", // Placeholder
+  ogImage: "https://haysen.cl/og.jpg",
   keywords: [
     "Silica Gel Chile",
     "Alúmina Activada",

@@ -17,8 +17,8 @@ export async function POST(req: Request) {
 
     // 1. Enviar correo al dueño (Notificación de nueva venta)
     const { data: adminData, error: adminError } = await resend.emails.send({
-      from: 'Cotizaciones Web <onboarding@resend.dev>',
-      to: ['jony.tz@gmail.com'],
+      from: 'Cotizaciones Web <contacto@haysen.cl>',
+      to: ['contacto@haysen.cl'],
       subject: `[ADMIN] Nueva Cotización Web - ${empresa || nombre}`,
       react: QuoteEmail({
         nombre,
@@ -39,9 +39,9 @@ export async function POST(req: Request) {
     // 2. Enviar correo al cliente (Confirmación de recepción)
     // NOTA: En modo prueba, solo podemos enviar a jony.tz@gmail.com.
     // Simulamos que le llega al cliente enviando una copia a tu correo con otro asunto.
-    const { data: clientData, error: clientError } = await resend.emails.send({
-      from: 'Haysen Group <onboarding@resend.dev>',
-      to: ['jony.tz@gmail.com'], // TODO: Cambiar a `email` (variable del cliente) cuando se verifique dominio
+    const { error: clientError } = await resend.emails.send({
+      from: 'Haysen Group <contacto@haysen.cl>',
+      to: [email],
       subject: `Hemos recibido tu solicitud de cotización - Haysen Group`,
       react: ClientConfirmationEmail({
         nombre,

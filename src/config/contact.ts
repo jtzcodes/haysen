@@ -19,7 +19,7 @@ export const contactConfig = {
   },
 
   // Correo Electrónico
-  email: "contacto@haysengroup.cl",
+  email: "contacto@haysen.cl",
 
   // Dirección Física
   address: "Santiago, Chile",

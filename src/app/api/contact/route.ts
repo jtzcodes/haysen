@@ -15,8 +15,8 @@ export async function POST(req: Request) {
     }
 
     const { data, error } = await resend.emails.send({
-      from: 'Contacto Web <onboarding@resend.dev>',
-      to: ['jony.tz@gmail.com'], // TODO: Cambiar a correo real de la empresa cuando se verifique dominio
+      from: 'Contacto Web <contacto@haysen.cl>',
+      to: ['contacto@haysen.cl'],
       replyTo: email, // Permite responder directamente al cliente
       subject: `[CONTACTO] Nuevo mensaje de ${nombre} - ${empresa || 'Web'}`,
       react: ContactEmail({
