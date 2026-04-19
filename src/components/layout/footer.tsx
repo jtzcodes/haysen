@@ -89,6 +89,13 @@ export function Footer() {
               <FooterLink href="/terminos">Términos y Condiciones</FooterLink>
               <FooterLink href="/privacidad">Política de Privacidad</FooterLink>
             </ul>
+            <div className="pt-2 border-t border-slate-800">
+              <Link href="/desarrollador" className="group flex flex-col gap-0.5">
+                <span className="text-xs text-slate-500">Desarrollado por</span>
+                <span className="text-sm text-slate-400 group-hover:text-emerald-400 transition-colors font-medium">Johnny Torres</span>
+                <span className="text-xs text-emerald-600 group-hover:text-emerald-400 transition-colors">Disponible para proyectos →</span>
+              </Link>
+            </div>
           </div>
 
           {/* Columna 4: Newsletter y Contacto (4 cols) */}
