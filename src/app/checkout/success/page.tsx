@@ -1,10 +1,21 @@
 import Link from "next/link"
+import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, Package, ArrowRight, Home } from "lucide-react"
 
 export default function SuccessPage() {
   return (
-    <div className="min-h-[80vh] flex flex-col items-center justify-center p-4 bg-slate-50">
+    <>
+      <Script id="google-ads-conversion" strategy="afterInteractive">
+        {`
+          gtag('event', 'conversion', {
+            'send_to': 'AW-791924237/lApNCPTrk5kcEI2cz_kC',
+            'value': 1.0,
+            'currency': 'CLP'
+          });
+        `}
+      </Script>
+      <div className="min-h-[80vh] flex flex-col items-center justify-center p-4 bg-slate-50">
       <div className="w-full max-w-lg bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center animate-in fade-in zoom-in duration-500">
         
         {/* Icono de Éxito Animado */}
@@ -56,5 +67,6 @@ export default function SuccessPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }
